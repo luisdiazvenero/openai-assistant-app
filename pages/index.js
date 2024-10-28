@@ -62,7 +62,7 @@ export default function Home() {
       <meta name="description" content={seoConfig.description} />
         <meta name="keywords" content={seoConfig.keywords} />
       {/* Favicon básico */}
-      <link rel="icon" href="/favicon.ico" />
+      <link rel="icon" href="/favicon-palmerabot.ico" />
       
       {/* Favicons para diferentes dispositivos/plataformas */}
       <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
