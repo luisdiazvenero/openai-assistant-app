@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import Head from 'next/head';
 import axios from 'axios';
 import Message from '../components/Message';
-import { gptConfig } from '../config/gpt-config';
+import { gptConfig, seoConfig } from '../config/gpt-config';
 import Image from 'next/image';
 
 export default function Home() {
@@ -56,14 +56,49 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
+    <div className="flex flex-col h-[100dvh]">
     <Head>
-      <title>{gptConfig.name}</title>
-      <meta name="description" content={gptConfig.description} />
+      <title>{seoConfig.title}</title>
+      <meta name="description" content={seoConfig.description} />
+        <meta name="keywords" content={seoConfig.keywords} />
+      {/* Favicon básico */}
       <link rel="icon" href="/favicon.ico" />
+      
+      {/* Favicons para diferentes dispositivos/plataformas */}
+      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+      <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+      <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
+      <link rel="manifest" href="/site.webmanifest" />
+      <meta name="theme-color" content="#e15200" />
+
+      {/* Meta tags para SEO */}
+      <meta name="robots" content="index, follow" />
+        <meta name="author" content={seoConfig.author} />
+        <meta name="language" content="Spanish" />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={seoConfig.url} />
+        <meta property="og:title" content={seoConfig.title} />
+        <meta property="og:description" content={seoConfig.description} />
+        <meta property="og:image" content={seoConfig.imageUrl} />
+        
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={seoConfig.url} />
+        <meta property="twitter:title" content={seoConfig.title} />
+        <meta property="twitter:description" content={seoConfig.description} />
+        <meta property="twitter:image" content={seoConfig.imageUrl} />
+        
+        {/* Meta tags adicionales */}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="theme-color" content="#e15200" />
+        
+        {/* Canonical URL */}
+        <link rel="canonical" href={seoConfig.url} />
     </Head>
 
-    {/* Header con estilos responsivos */}
+    {/* Header */}
     <header className="bg-white shadow-sm">
       <div className="container mx-auto max-w-4xl px-4 py-3 sm:py-6">
         <div className="flex items-center space-x-3 sm:space-x-4">
@@ -85,9 +120,10 @@ export default function Home() {
       </div>
     </header>
 
-    <main className="flex-grow container mx-auto max-w-4xl p-4">
+    {/* Main - con flex-1 para ocupar el espacio restante */}
+    <main className="flex-1 container mx-auto max-w-4xl p-2 sm:p-4 overflow-hidden flex flex-col">
       {messages.length === 0 && (
-        <div className="mb-6">
+        <div className="mb-2 sm:mb-4">
           <h2 className="text-lg font-semibold text-gray-700 mb-3 hidden sm:block">Sugerencias de preguntas</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
             {gptConfig.quickPrompts.map((prompt, index) => (
@@ -104,15 +140,9 @@ export default function Home() {
         </div>
       )}
 
-      <div className="bg-white rounded-lg shadow-lg h-[60vh] sm:h-[60vh] flex flex-col">
-        {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
-            <strong className="font-bold">Error: </strong>
-            <span className="block sm:inline">{error}</span>
-          </div>
-        )}
-
-        <div className="flex-grow overflow-y-auto p-4 space-y-4">
+      {/* Chat box que ocupa el espacio restante */}
+      <div className="flex-1 bg-white rounded-lg shadow-lg flex flex-col min-h-0">
+        <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-4">
           {messages.map((msg, idx) => (
             <Message key={idx} role={msg.role} content={msg.content} />
           ))}
@@ -130,8 +160,9 @@ export default function Home() {
           <div ref={messagesEndRef} />
         </div>
 
-        <div className="border-t p-3 sm:p-4">
-          <form onSubmit={handleSubmit} className="flex space-x-2">
+        {/* Input */}
+        <div className="border-t">
+          <form onSubmit={handleSubmit} className="flex space-x-2 p-2 sm:p-4">
             <input
               type="text"
               value={input}
@@ -153,7 +184,7 @@ export default function Home() {
     </main>
 
     {/* Footer */}
-    <footer className="py-4">
+    <footer className="py-2 sm:py-4 bg-white">
       <div className="container mx-auto max-w-4xl px-4">
         <div className="text-center text-sm text-gray-600">
           Desarrollado por{' '}

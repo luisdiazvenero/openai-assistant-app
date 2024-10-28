@@ -22,3 +22,12 @@ export const gptConfig = {
       }
     ]
   };
+
+  export const seoConfig = {
+    title: "Sugey de Palmera: Protección Polar y Prevención de Dengue",
+    description: "Ayuda sobre Protección Polar y Prevención de Dengue para Empresas, cumpliendo con la Ley 30102.",
+    url: "https://chatbot.palmera.pe",
+    imageUrl: "https://chatbot.palmera.pe/favicon-192x192.png",
+    author: "@ramirezcorzo",
+    keywords: "Palmera, bloqueador solar, repelente, Ley 30102, asistente virtual, AI, chatbot, inteligencia artificial, OpenAI"
+  };

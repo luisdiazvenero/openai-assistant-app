@@ -44,8 +44,7 @@ const Message = ({ role, content }) => {
                   <img
                     src={src}
                     alt={alt}
-                    className="max-h-[320px] w-auto object-contain rounded-lg"
-                    style={{ maxWidth: '320px' }}
+                    className="w-full sm:max-w-[320px] object-contain rounded-lg"
                   />
                 </div>
               ),
