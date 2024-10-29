@@ -1,8 +1,8 @@
 // config/gpt-config.js
 export const gptConfig = {
-    name: "Sugey de Palmera",
-    description: "Ayuda sobre Protección Polar y Prevención de Dengue para Empresas, cumpliendo con la Ley 30102.",
-    imageUrl: "/sugey.png", // Asegúrate de agregar esta imagen en la carpeta public
+    name: "Carla de Palmera",
+    description: "Tu asistente para Protección Polar y Prevención de Dengue para Empresas - Ley 30102.",
+    imageUrl: "/assistant-2.webp", // Asegúrate de agregar esta imagen en la carpeta public
     quickPrompts: [
       {
         title: "☀️ Precio del Bloqueador",
