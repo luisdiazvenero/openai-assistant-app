@@ -130,7 +130,7 @@ Las contribuciones son bienvenidas. Por favor:
 Este proyecto está bajo la licencia MIT.
 
 ## 👥 Créditos
-Desarrollado por [@luisdiazvenero](luisdiazvenero@gmail.com)
+Desarrollado por [@luisdiazvenero](mailto:luisdiazvenero@gmail.com)
 
 ## 🆘 Soporte
 Para soporte o consultas:
