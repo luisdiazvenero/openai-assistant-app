@@ -1,21 +1,25 @@
-# PalmeraBot - Asistente Virtual de Protección Laboral
+# OpenAI Assistant Chat Interface
 
 ## 🌞 Descripción
-PalmeraBot es un asistente virtual especializado en asesorar a empresas sobre la protección solar y control de mosquitos para empleados que trabajan al aire libre. Desarrollado con Next.js y la API de OpenAI Assistants, ayuda a las organizaciones a cumplir con la Ley 30102 mientras optimiza la selección de productos Palmera según sus necesidades específicas.
+Un chatbot web moderno y receptivo construido con Next.js que se integra con la API de OpenAI Assistants. Este proyecto proporciona una interfaz de usuario pulida y profesional para interactuar con cualquier asistente personalizado de OpenAI, similar a la interfaz web oficial de OpenAI.
 
-## 🎯 Objetivos Principales
-- Asesorar sobre protección solar y repelentes según cantidad de trabajadores
-- Recomendar productos basados en condiciones climáticas y riesgos locales
-- Facilitar el cumplimiento de la Ley 30102
-- Promover soluciones Palmera disponibles en [palmera.pe](https://palmera.pe)
-
-## 🚀 Características
-- Interfaz de chat intuitiva y responsiva
-- Respuestas personalizadas basadas en el contexto
-- Sugerencias de preguntas frecuentes
+## 🎯 Características Principales
+- Interfaz de chat moderna y responsive
+- Integración completa con OpenAI Assistants API
+- Personalización completa del asistente
 - Soporte para markdown en respuestas
-- Diseño optimizado para móviles y escritorio
-- SEO optimizado para mejor visibilidad
+- Sistema de sugerencias de preguntas inicial
+- SEO optimizado y meta tags configurables
+- Soporte para compartir en redes sociales
+
+## 🚀 Características Técnicas
+- Diseño responsive optimizado para móvil y escritorio
+- Indicador de escritura animado
+- Soporte completo para markdown en respuestas
+- Scroll automático a nuevos mensajes
+- Manejo de errores y estados de carga
+- Personalización completa de estilos y tema
+- Sistema de componentes modular
 
 ## 🛠 Tecnologías
 - **Frontend:** Next.js 14, React 18
@@ -35,7 +39,7 @@ PalmeraBot es un asistente virtual especializado en asesorar a empresas sobre la
 1. Clonar el repositorio:
 ```bash
 git clone [url-del-repositorio]
-cd palmerabot
+cd openai-assistant-chat
 ```
 
 2. Instalar dependencias:
@@ -61,7 +65,7 @@ yarn dev
 
 ## 🌐 Estructura del Proyecto
 ```
-palmerabot/
+proyecto/
 ├── config/
 │   ├── gpt-config.js     # Configuración del asistente y SEO
 │   └── theme.js          # Configuración de tema y estilos
@@ -84,12 +88,13 @@ Modifica `config/theme.js` para cambiar:
 - Tipografía
 - Pesos de fuente
 
-### Contenido
+### Asistente
 Ajusta `config/gpt-config.js` para:
-- Nombre del bot
+- Nombre del asistente
 - Descripción
+- Avatar
 - Sugerencias de preguntas
-- Meta tags
+- Meta tags y SEO
 
 ## 📱 Responsive Design
 - Mobile First
@@ -106,10 +111,12 @@ Ajusta `config/gpt-config.js` para:
 - Canonical URLs
 - Sitemap automático
 
-## 📈 Monitoreo y Analytics
-- Logs detallados de interacciones
-- Tracking de errores
-- Métricas de uso
+## 📈 Características de Desarrollo
+- Hot Reloading
+- Manejo de errores detallado
+- Logging de interacciones
+- Optimización de rendimiento
+- TypeScript ready
 
 ## 🤝 Contribuciones
 Las contribuciones son bienvenidas. Por favor:
@@ -123,7 +130,7 @@ Las contribuciones son bienvenidas. Por favor:
 Este proyecto está bajo la licencia MIT.
 
 ## 👥 Créditos
-Desarrollado por [@ramirezcorzo](http://ramirezcorzo.pe/)
+Desarrollado por [@luisdiazvenero](luisdiazvenero@gmail.com)
 
 ## 🆘 Soporte
 Para soporte o consultas:
