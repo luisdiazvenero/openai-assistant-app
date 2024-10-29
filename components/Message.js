@@ -11,14 +11,14 @@ const Message = ({ role, content }) => {
         className={`max-w-[80%] p-3 rounded-lg ${
           role === 'user'
             ? 'bg-custom-orange text-white'
-            : 'bg-gray-100 text-gray-800'
+            : 'bg-gray-100 text-gray-900'
         }`}
       >
         {role === 'user' ? (
           <div className="whitespace-pre-wrap">{content}</div>
         ) : (
           <ReactMarkdown
-            className="prose prose-sm max-w-none dark:prose-invert"
+            className="prose prose-sm max-w-none dark:prose-invert [&>*]:text-gray-900 prose-a:text-custom-orange prose-a:underline hover:prose-a:text-custom-orange-dark"
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeRaw, rehypeSanitize]}
             components={{
@@ -31,10 +31,10 @@ const Message = ({ role, content }) => {
               li: ({ children }) => <li className="mb-1">{children}</li>,
               a: ({ children, href }) => (
                 <a
-                  href={href}
-                  className="text-custom-orange hover:text-custom-orange-dark underline"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                href={href}
+                className="text-custom-orange underline hover:text-custom-orange-dark transition-colors duration-200"
+                target="_blank"
+                rel="noopener noreferrer"
                 >
                   {children}
                 </a>
