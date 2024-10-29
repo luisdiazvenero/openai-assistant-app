@@ -167,10 +167,10 @@ export default function Home() {
           </div>
 
         {/* Área de entrada con sugerencias rápidas */}
-        <div className="border-t">
+          <div>
             {/* Sugerencias rápidas - se muestran cuando hay mensajes */}
             {messages.length > 0 && (
-              <div className="px-2 pt-2 pb-0 flex space-x-2 overflow-x-auto whitespace-nowrap scrollbar-hide">
+              <div className="px-2 pt-4 pb-0 flex space-x-2 overflow-x-auto whitespace-nowrap scrollbar-hide">
                 {gptConfig.quickPrompts.map((prompt, index) => (
                   <button
                     key={index}
@@ -184,24 +184,32 @@ export default function Home() {
             )}
             
             {/* Formulario de entrada */}
-            <form onSubmit={handleSubmit} className="flex space-x-2 px-2 pt-2 pb-2">
+            <form onSubmit={handleSubmit} className="flex items-center space-x-2 p-2 sm:p-4 max-w-4xl mx-auto">
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Escribe tu pregunta..."
-                className="flex-grow p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-orange"
+                className="flex-grow p-3 bg-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-orange focus:ring-opacity-50 transition-all duration-200 placeholder-gray-500 border border-transparent hover:border-gray-300 focus:border-transparent"
                 disabled={isLoading}
               />
               <button
                 type="submit"
                 disabled={isLoading}
-                className="px-4 py-2 bg-custom-orange text-white rounded-lg hover:bg-custom-orange-dark focus:outline-none focus:ring-2 focus:ring-custom-orange disabled:opacity-50 transition-colors duration-200"
+                className="p-3 bg-custom-orange text-white rounded-lg hover:bg-custom-orange-dark focus:outline-none focus:ring-2 focus:ring-custom-orange disabled:opacity-50 transition-colors duration-200 flex items-center justify-center"
               >
-                Enviar
+                <svg 
+                  xmlns="http://www.w3.org/2000/svg" 
+                  viewBox="0 0 24 24" 
+                  fill="currentColor" 
+                  className="w-5 h-5"
+                >
+                  <path d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z" />
+                </svg>
               </button>
             </form>
           </div>
+          
         </div>
       </main>
 
