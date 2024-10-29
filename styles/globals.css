@@ -115,6 +115,58 @@ body {
   display: none;  /* Chrome, Safari and Opera */
 }
 
+/* Avatar con indicador "en línea" */
+.avatar-online {
+  position: relative;
+}
+
+.avatar-online::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  padding: 2px;
+  background: linear-gradient(45deg, #e15200, #ff6b1a);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes pulse-border {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse-border {
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: #e15200;
+  opacity: 0.3;
+  animation: pulse-border 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
 /* Soporte para modo oscuro si es necesario */
 @media (prefers-color-scheme: dark) {
   .prose {

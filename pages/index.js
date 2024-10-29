@@ -102,7 +102,10 @@ export default function Home() {
     <header className="bg-white shadow-sm">
         <div className="container mx-auto max-w-4xl px-4 py-3 sm:py-6">
           <div className="flex items-center space-x-3 sm:space-x-4">
-            <div className="relative w-12 h-12 flex-shrink-0 rounded-full overflow-hidden ring-2 ring-gray-100">
+          
+          <div className="relative w-12 h-12 flex-shrink-0">
+            <div className="absolute inset-0 rounded-full animate-pulse-border"></div>
+            <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-white ring-2 ring-custom-orange">
               <Image
                 src={gptConfig.imageUrl}
                 alt={gptConfig.name}
@@ -112,6 +115,7 @@ export default function Home() {
                 priority
               />
             </div>
+          </div>
             <div className="min-w-0">
               <h1 className="text-lg sm:text-2xl font-bold text-gray-900 truncate">{gptConfig.name}</h1>
               <p className="text-sm sm:text-base text-gray-600 truncate">{gptConfig.description}</p>

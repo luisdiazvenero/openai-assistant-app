@@ -2,7 +2,7 @@
 export const gptConfig = {
     name: "Carla de Palmera",
     description: "Tu asistente para Protección Polar y Prevención de Dengue para Empresas - Ley 30102.",
-    imageUrl: "/assistant-2.webp", // Asegúrate de agregar esta imagen en la carpeta public
+    imageUrl: "/assistant-3.webp", // Asegúrate de agregar esta imagen en la carpeta public
     quickPrompts: [
       {
         title: "☀️ Precio del Bloqueador",
@@ -24,8 +24,8 @@ export const gptConfig = {
   };
 
   export const seoConfig = {
-    title: "Sugey de Palmera: Protección Polar y Prevención de Dengue",
-    description: "Ayuda sobre Protección Polar y Prevención de Dengue para Empresas, cumpliendo con la Ley 30102.",
+    title: "Carla de Palmera: Protección Polar y Prevención de Dengue",
+    description: "Tu asistente para Protección Polar y Prevención de Dengue para Empresas, cumpliendo con la Ley 30102.",
     url: "https://chatbot.palmera.pe",
     imageUrl: "https://chatbot.palmera.pe/favicon-192x192.png",
     author: "@ramirezcorzo",
