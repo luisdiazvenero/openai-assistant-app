@@ -105,6 +105,16 @@ body {
   color: inherit;
 }
 
+/* Ocultar scrollbar para las sugerencias rápidas */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
 /* Soporte para modo oscuro si es necesario */
 @media (prefers-color-scheme: dark) {
   .prose {

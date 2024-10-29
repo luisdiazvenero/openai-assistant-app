@@ -100,88 +100,106 @@ export default function Home() {
 
     {/* Header */}
     <header className="bg-white shadow-sm">
-      <div className="container mx-auto max-w-4xl px-4 py-3 sm:py-6">
-        <div className="flex items-center space-x-3 sm:space-x-4">
-          <div className="relative w-12 h-12 flex-shrink-0 rounded-full overflow-hidden ring-2 ring-gray-100">
-            <Image
-              src={gptConfig.imageUrl}
-              alt={gptConfig.name}
-              width={48}
-              height={48}
-              className="object-cover rounded-full"
-              priority
-            />
-          </div>
-          <div className="min-w-0">
-            <h1 className="text-lg sm:text-2xl font-bold text-gray-900 truncate">{gptConfig.name}</h1>
-            <p className="text-sm sm:text-base text-gray-600 truncate">{gptConfig.description}</p>
+        <div className="container mx-auto max-w-4xl px-4 py-3 sm:py-6">
+          <div className="flex items-center space-x-3 sm:space-x-4">
+            <div className="relative w-12 h-12 flex-shrink-0 rounded-full overflow-hidden ring-2 ring-gray-100">
+              <Image
+                src={gptConfig.imageUrl}
+                alt={gptConfig.name}
+                width={48}
+                height={48}
+                className="object-cover rounded-full"
+                priority
+              />
+            </div>
+            <div className="min-w-0">
+              <h1 className="text-lg sm:text-2xl font-bold text-gray-900 truncate">{gptConfig.name}</h1>
+              <p className="text-sm sm:text-base text-gray-600 truncate">{gptConfig.description}</p>
+            </div>
           </div>
         </div>
-      </div>
-    </header>
+      </header>
 
-    {/* Main - con flex-1 para ocupar el espacio restante */}
+    {/* Main */}
     <main className="flex-1 container mx-auto max-w-4xl p-2 sm:p-4 overflow-hidden flex flex-col">
-      {messages.length === 0 && (
-        <div className="mb-2 sm:mb-4">
-          <h2 className="text-lg font-semibold text-gray-700 mb-3 hidden sm:block">Sugerencias de preguntas</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
-            {gptConfig.quickPrompts.map((prompt, index) => (
-              <button
-                key={index}
-                onClick={() => sendMessage(prompt.prompt)}
-                className="text-left p-3 sm:p-4 bg-white rounded-lg border border-gray-200 hover:border-custom-orange transition-all duration-200"
-              >
-                <div className="font-medium text-gray-900">{prompt.title}</div>
-                <div className="text-sm text-gray-500">{prompt.prompt}</div>
-              </button>
-            ))}
+        {/* Sugerencias iniciales - solo se muestran si no hay mensajes */}
+        {messages.length === 0 && (
+          <div className="mb-2 sm:mb-4">
+            <h2 className="text-lg font-semibold text-gray-700 mb-3 hidden sm:block">Sugerencias de preguntas</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
+              {gptConfig.quickPrompts.map((prompt, index) => (
+                <button
+                  key={index}
+                  onClick={() => sendMessage(prompt.prompt)}
+                  className="text-left p-3 sm:p-4 bg-white rounded-lg border border-gray-200 hover:border-custom-orange transition-all duration-200"
+                >
+                  <div className="font-medium text-gray-900">{prompt.title}</div>
+                  <div className="text-sm text-gray-500">{prompt.prompt}</div>
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Chat box que ocupa el espacio restante */}
+      {/* Chat box */}
       <div className="flex-1 bg-white rounded-lg shadow-lg flex flex-col min-h-0">
-        <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-4">
-          {messages.map((msg, idx) => (
-            <Message key={idx} role={msg.role} content={msg.content} />
-          ))}
-          {isLoading && (
-            <div className="flex justify-start">
-              <div className="bg-gray-100 p-3 rounded-lg">
-                <div className="typing-indicator">
-                  <span></span>
-                  <span></span>
-                  <span></span>
+          {/* Mensajes */}
+          <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-4">
+            {messages.map((msg, idx) => (
+              <Message key={idx} role={msg.role} content={msg.content} />
+            ))}
+            {isLoading && (
+              <div className="flex justify-start">
+                <div className="bg-gray-100 p-3 rounded-lg">
+                  <div className="typing-indicator">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
-          <div ref={messagesEndRef} />
-        </div>
+            )}
+            <div ref={messagesEndRef} />
+          </div>
 
-        {/* Input */}
+        {/* Área de entrada con sugerencias rápidas */}
         <div className="border-t">
-          <form onSubmit={handleSubmit} className="flex space-x-2 p-2 sm:p-4">
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Escribe tu pregunta..."
-              className="flex-grow p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-orange"
-              disabled={isLoading}
-            />
-            <button
-              type="submit"
-              disabled={isLoading}
-              className="px-4 py-2 bg-custom-orange text-white rounded-lg hover:bg-custom-orange-dark focus:outline-none focus:ring-2 focus:ring-custom-orange disabled:opacity-50 transition-colors duration-200"
-            >
-              Enviar
-            </button>
-          </form>
+            {/* Sugerencias rápidas - se muestran cuando hay mensajes */}
+            {messages.length > 0 && (
+              <div className="px-2 pt-2 pb-0 flex space-x-2 overflow-x-auto whitespace-nowrap scrollbar-hide">
+                {gptConfig.quickPrompts.map((prompt, index) => (
+                  <button
+                    key={index}
+                    onClick={() => sendMessage(prompt.prompt)}
+                    className="inline-flex items-center px-3 py-1.5 bg-gray-50 text-sm font-medium text-gray-700 rounded-full border border-gray-200 hover:bg-gray-100 hover:border-custom-orange transition-all duration-200"
+                  >
+                    {prompt.title}
+                  </button>
+                ))}
+              </div>
+            )}
+            
+            {/* Formulario de entrada */}
+            <form onSubmit={handleSubmit} className="flex space-x-2 px-2 pt-2 pb-2">
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Escribe tu pregunta..."
+                className="flex-grow p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-orange"
+                disabled={isLoading}
+              />
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="px-4 py-2 bg-custom-orange text-white rounded-lg hover:bg-custom-orange-dark focus:outline-none focus:ring-2 focus:ring-custom-orange disabled:opacity-50 transition-colors duration-200"
+              >
+                Enviar
+              </button>
+            </form>
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
 
     {/* Footer */}
     <footer className="py-2 sm:py-4 bg-white">
