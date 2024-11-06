@@ -2,7 +2,7 @@
 export const gptConfig = {
     name: "Chatbot Palmera",
     description: "Tu asistente para Protección Solar y Prevención de Dengue para Empresas - Ley 30102.",
-    imageUrl: "/ai.png", // Asegúrate de agregar esta imagen en la carpeta public
+    imageUrl: "/bot-image.png", // Asegúrate de agregar esta imagen en la carpeta public
     quickPrompts: [
       {
         title: "☀️ Precio del Bloqueador",
