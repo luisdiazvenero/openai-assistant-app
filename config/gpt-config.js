@@ -1,8 +1,8 @@
 // config/gpt-config.js
 export const gptConfig = {
-    name: "Mera - BOT",
+    name: "Chatbot Palmera",
     description: "Tu asistente para Protección Solar y Prevención de Dengue para Empresas - Ley 30102.",
-    imageUrl: "/assistant-3.webp", // Asegúrate de agregar esta imagen en la carpeta public
+    imageUrl: "/ai.png", // Asegúrate de agregar esta imagen en la carpeta public
     quickPrompts: [
       {
         title: "☀️ Precio del Bloqueador",
@@ -24,7 +24,7 @@ export const gptConfig = {
   };
 
   export const seoConfig = {
-    title: "Mera BOT -  Protección Polar y Prevención de Dengue de Palmera",
+    title: "Chatbot Palmera -  Protección Polar y Prevención de Dengue de Palmera",
     description: "Tu asistente para Protección Polar y Prevención de Dengue para Empresas, cumpliendo con la Ley 30102.",
     url: "https://chatbot.palmera.pe",
     imageUrl: "https://chatbot.palmera.pe/favicon-192x192.png",

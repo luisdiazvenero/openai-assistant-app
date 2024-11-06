@@ -104,14 +104,14 @@ export default function Home() {
           <div className="flex items-center space-x-3 sm:space-x-4">
           
           <div className="relative w-12 h-12 flex-shrink-0">
-            <div className="absolute inset-0 rounded-full animate-pulse-border"></div>
-            <div className="relative w-full h-full rounded-full overflow-hidden border-2 border-white ring-2 ring-custom-orange">
+            
+            <div className="relative w-full h-full  overflow-hidden border-2 border-white">
               <Image
                 src={gptConfig.imageUrl}
                 alt={gptConfig.name}
                 width={48}
                 height={48}
-                className="object-cover rounded-full"
+                className="object-cover "
                 priority
               />
             </div>
