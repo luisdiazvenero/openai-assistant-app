@@ -6,7 +6,7 @@ export const gptConfig = {
     quickPrompts: [
       {
         title: "☀️ Precio del Bloqueador",
-        prompt: "¿Cuánto cuesta el Bloqueador de 100ml?"
+        prompt: "¿Cuánto cuesta el Bloqueador de 110ml?"
       },
       {
         title: "🦟 Precio del Repelente",
