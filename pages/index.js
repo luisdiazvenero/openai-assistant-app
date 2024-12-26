@@ -35,7 +35,9 @@ export default function Home() {
     setMessages(prev => [...prev, { role: 'user', content: message }]);
 
     try {
-      const response = await axios.post('/api/chat', { message });
+      const response = await axios.post('/api/chat', { message }, {
+        timeout: 60000 // 60 segundos
+      });
       setMessages(prev => [...prev, { role: 'assistant', content: response.data.message }]);
     } catch (err) {
       console.error('Error detallado:', {
