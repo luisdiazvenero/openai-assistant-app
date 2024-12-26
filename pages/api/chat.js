@@ -28,6 +28,9 @@ export default async function handler(req, res) {
     
     const openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
+      defaultHeaders: {
+        'OpenAI-Beta': 'assistants=v2'
+      }
     });
 
     // Crear un nuevo thread
