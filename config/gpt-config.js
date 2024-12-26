@@ -24,7 +24,7 @@ export const gptConfig = {
   };
 
   export const seoConfig = {
-    title: "Chatbot Palmera -  Protección Polar y Prevención de Dengue de Palmera",
+    title: "Chatbot Palmera -  Protección Solar y Prevención de Dengue de Palmera",
     description: "Tu asistente para Protección Polar y Prevención de Dengue para Empresas, cumpliendo con la Ley 30102.",
     url: "https://chatbot.palmera.pe",
     imageUrl: "https://chatbot.palmera.pe/favicon-192x192.png",
