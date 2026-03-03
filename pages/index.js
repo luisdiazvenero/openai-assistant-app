@@ -23,7 +23,7 @@ export default function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!input.trim()) return;
-    
+
     await sendMessage(input.trim());
   };
 
@@ -36,21 +36,46 @@ export default function Home() {
 
     try {
       const response = await axios.post('/api/chat', { message }, {
-        timeout: 60000 // 60 segundos
+        timeout: 60000
       });
-      setMessages(prev => [...prev, { role: 'assistant', content: response.data.message }]);
+
+      const fullContent = response.data.message;
+      const bubbles = fullContent
+        .split('[BUBBLE]')
+        .map(b => b.trim())
+        .filter(b => b.length > 0);
+
+      // Mostrar cada bubble secuencialmente con animación de typing entre cada uno
+      for (let i = 0; i < bubbles.length; i++) {
+        // Mostrar typing indicator
+        setIsLoading(true);
+
+        // Delay proporcional al largo del bubble anterior (mínimo 600ms, máximo 1800ms)
+        const delay = Math.min(Math.max(bubbles[i].length * 15, 600), 1800);
+        await new Promise(resolve => setTimeout(resolve, delay));
+
+        // Agregar el bubble y ocultar typing
+        setIsLoading(false);
+        setMessages(prev => [...prev, { role: 'assistant', content: bubbles[i] }]);
+
+        // Pequeña pausa entre bubbles
+        if (i < bubbles.length - 1) {
+          await new Promise(resolve => setTimeout(resolve, 300));
+        }
+      }
+
     } catch (err) {
       console.error('Error detallado:', {
         message: err.message,
         response: err.response?.data,
         status: err.response?.status
       });
-      
-      const errorMessage = err.response?.data?.details || 
-                          err.response?.data?.error || 
-                          err.message || 
-                          'Error desconocido';
-      
+
+      const errorMessage = err.response?.data?.details ||
+        err.response?.data?.error ||
+        err.message ||
+        'Error desconocido';
+
       setError(`Error: ${errorMessage}`);
     } finally {
       setIsLoading(false);
@@ -59,65 +84,65 @@ export default function Home() {
 
   return (
     <div className="flex flex-col h-[100dvh]">
-    <Head>
-      <title>{seoConfig.title}</title>
-      <meta name="description" content={seoConfig.description} />
+      <Head>
+        <title>{seoConfig.title}</title>
+        <meta name="description" content={seoConfig.description} />
         <meta name="keywords" content={seoConfig.keywords} />
-      {/* Favicon básico */}
-      <link rel="icon" href="/favicon-palmerabot.ico" />
-      
-      {/* Favicons para diferentes dispositivos/plataformas */}
-      <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-      <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
-      <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
-      <link rel="manifest" href="/site.webmanifest" />
-      <meta name="theme-color" content="#e15200" />
+        {/* Favicon básico */}
+        <link rel="icon" href="/favicon-palmerabot.ico" />
 
-      {/* Meta tags para SEO */}
-      <meta name="robots" content="index, follow" />
+        {/* Favicons para diferentes dispositivos/plataformas */}
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png" />
+        <link rel="manifest" href="/site.webmanifest" />
+        <meta name="theme-color" content="#e15200" />
+
+        {/* Meta tags para SEO */}
+        <meta name="robots" content="index, follow" />
         <meta name="author" content={seoConfig.author} />
         <meta name="language" content="Spanish" />
-        
+
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content={seoConfig.url} />
         <meta property="og:title" content={seoConfig.title} />
         <meta property="og:description" content={seoConfig.description} />
         <meta property="og:image" content={seoConfig.imageUrl} />
-        
+
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content={seoConfig.url} />
         <meta property="twitter:title" content={seoConfig.title} />
         <meta property="twitter:description" content={seoConfig.description} />
         <meta property="twitter:image" content={seoConfig.imageUrl} />
-        
+
         {/* Meta tags adicionales */}
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="theme-color" content="#e15200" />
-        
+
         {/* Canonical URL */}
         <link rel="canonical" href={seoConfig.url} />
-    </Head>
+      </Head>
 
-    {/* Header */}
-    <header className="bg-white shadow-sm">
+      {/* Header */}
+      <header className="bg-white shadow-sm">
         <div className="container mx-auto max-w-4xl px-4 py-3 sm:py-6">
           <div className="flex items-center space-x-3 sm:space-x-4">
-          
-          <div className="relative w-12 h-12 flex-shrink-0">
-            
-            <div className="relative w-full h-full  overflow-hidden border-2 border-white">
-              <Image
-                src={gptConfig.imageUrl}
-                alt={gptConfig.name}
-                width={48}
-                height={48}
-                className="object-cover "
-                priority
-              />
+
+            <div className="relative w-12 h-12 flex-shrink-0">
+
+              <div className="relative w-full h-full  overflow-hidden border-2 border-white">
+                <Image
+                  src={gptConfig.imageUrl}
+                  alt={gptConfig.name}
+                  width={48}
+                  height={48}
+                  className="object-cover "
+                  priority
+                />
+              </div>
             </div>
-          </div>
             <div className="min-w-0">
               <h1 className="text-lg sm:text-2xl font-bold text-gray-900 truncate">{gptConfig.name}</h1>
               <p className="text-sm sm:text-base text-gray-600 truncate">{gptConfig.description}</p>
@@ -126,8 +151,8 @@ export default function Home() {
         </div>
       </header>
 
-    {/* Main */}
-    <main className="flex-1 container mx-auto max-w-4xl p-2 sm:p-4 overflow-hidden flex flex-col">
+      {/* Main */}
+      <main className="flex-1 container mx-auto max-w-4xl p-2 sm:p-4 overflow-hidden flex flex-col">
         {/* Sugerencias iniciales - solo se muestran si no hay mensajes */}
         {messages.length === 0 && (
           <div className="mb-2 sm:mb-4">
@@ -147,8 +172,8 @@ export default function Home() {
           </div>
         )}
 
-      {/* Chat box */}
-      <div className="flex-1 bg-white rounded-lg shadow-lg flex flex-col min-h-0">
+        {/* Chat box */}
+        <div className="flex-1 bg-white rounded-lg shadow-lg flex flex-col min-h-0">
           {/* Mensajes */}
           <div className="flex-1 overflow-y-auto p-3 sm:p-4 space-y-4">
             {messages.map((msg, idx) => (
@@ -168,7 +193,7 @@ export default function Home() {
             <div ref={messagesEndRef} />
           </div>
 
-        {/* Área de entrada con sugerencias rápidas */}
+          {/* Área de entrada con sugerencias rápidas */}
           <div>
             {/* Sugerencias rápidas - se muestran cuando hay mensajes */}
             {messages.length > 0 && (
@@ -184,7 +209,7 @@ export default function Home() {
                 ))}
               </div>
             )}
-            
+
             {/* Formulario de entrada */}
             <form onSubmit={handleSubmit} className="flex items-center space-x-2 p-2 sm:p-4 max-w-4xl mx-auto">
               <input
@@ -200,10 +225,10 @@ export default function Home() {
                 disabled={isLoading}
                 className="p-3 bg-custom-orange text-white rounded-lg hover:bg-custom-orange-dark focus:outline-none focus:ring-2 focus:ring-custom-orange disabled:opacity-50 transition-colors duration-200 flex items-center justify-center"
               >
-                <svg 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  viewBox="0 0 24 24" 
-                  fill="currentColor" 
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
                   className="w-5 h-5"
                 >
                   <path d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z" />
@@ -211,26 +236,26 @@ export default function Home() {
               </button>
             </form>
           </div>
-          
+
         </div>
       </main>
 
-    {/* Footer */}
-    <footer className="py-2 sm:py-4 bg-white">
-      <div className="container mx-auto max-w-4xl px-4">
-        <div className="text-center text-sm text-gray-600">
-          Desarrollado por{' '}
-          <a 
-            href="http://ramirezcorzo.pe/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-custom-orange hover:text-custom-orange-dark font-medium transition-colors duration-200"
-          >
-            @ramirezcorzo
-          </a>
+      {/* Footer */}
+      <footer className="py-2 sm:py-4 bg-white">
+        <div className="container mx-auto max-w-4xl px-4">
+          <div className="text-center text-sm text-gray-600">
+            Desarrollado por{' '}
+            <a
+              href="http://ramirezcorzo.pe/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-custom-orange hover:text-custom-orange-dark font-medium transition-colors duration-200"
+            >
+              @ramirezcorzo
+            </a>
+          </div>
         </div>
-      </div>
-    </footer>
-  </div>
+      </footer>
+    </div>
   );
 }
