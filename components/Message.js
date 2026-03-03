@@ -10,7 +10,7 @@ const markdownComponents = {
   h2: ({ children }) => <h2 className="text-xl font-bold mb-3">{children}</h2>,
   h3: ({ children }) => <h3 className="text-lg font-bold mb-2">{children}</h3>,
   ul: ({ children }) => <ul className="list-disc pl-4 mb-2 space-y-1">{children}</ul>,
-  ol: ({ children }) => <ol className="list-decimal pl-4 mb-2 space-y-1">{children}</ol>,
+  ol: ({ start, children }) => <ol start={start} className="list-decimal pl-4 mb-2 space-y-1">{children}</ol>,
   li: ({ children }) => <li className="mb-1">{children}</li>,
   a: ({ children, href }) => (
     <a
@@ -54,20 +54,42 @@ const markdownComponents = {
   ),
 }
 
-const BotBubble = ({ content }) => (
-  <div className="flex justify-start">
-    <div className="max-w-[80%] p-3 rounded-lg bg-gray-100 text-gray-900">
-      <ReactMarkdown
-        className="prose prose-sm max-w-none dark:prose-invert [&>*]:text-gray-900 prose-a:text-custom-orange prose-a:underline hover:prose-a:text-custom-orange-dark"
-        remarkPlugins={[remarkGfm]}
-        rehypePlugins={[rehypeRaw, rehypeSanitize]}
-        components={markdownComponents}
-      >
-        {content}
-      </ReactMarkdown>
+// Detecta si un bubble es un item de lista numerada (empieza con "1. " o "2. " etc)
+const getListItemNumber = (text) => {
+  const match = text.match(/^(\d+)\.\s/)
+  return match ? parseInt(match[1]) : null
+}
+
+// Cuenta cuantos items de lista hay en un bubble
+const countListItems = (text) => {
+  const matches = text.match(/^\d+\.\s/gm)
+  return matches ? matches.length : 0
+}
+
+// Reemplaza el numero inicial de lista en un bubble
+const replaceListStart = (text, newStart) => {
+  return text.replace(/^\d+\./, `${newStart}.`)
+}
+
+const BotBubble = ({ content, listStart }) => {
+  // Si hay un listStart, reemplazar el numero inicial del item
+  const finalContent = listStart ? replaceListStart(content, listStart) : content
+
+  return (
+    <div className="flex justify-start">
+      <div className="max-w-[80%] p-3 rounded-lg bg-gray-100 text-gray-900">
+        <ReactMarkdown
+          className="prose prose-sm max-w-none dark:prose-invert [&>*]:text-gray-900 prose-a:text-custom-orange prose-a:underline hover:prose-a:text-custom-orange-dark"
+          remarkPlugins={[remarkGfm]}
+          rehypePlugins={[rehypeRaw, rehypeSanitize]}
+          components={markdownComponents}
+        >
+          {finalContent}
+        </ReactMarkdown>
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 const Message = ({ role, content }) => {
   if (role === 'user') {
@@ -81,15 +103,29 @@ const Message = ({ role, content }) => {
   }
 
   // Split bot message by [BUBBLE] and render each part as a separate bubble
-  const bubbles = content
+  const rawBubbles = content
     .split('[BUBBLE]')
     .map(b => b.trim())
     .filter(b => b.length > 0)
 
+  // Calcular listStart para bubbles que son items de lista numerada consecutivos
+  let listCounter = 1
+  const bubbles = rawBubbles.map((bubble, index) => {
+    const isListItem = getListItemNumber(bubble) !== null
+    if (isListItem) {
+      const start = listCounter
+      listCounter += countListItems(bubble)
+      return { content: bubble, listStart: start }
+    } else {
+      listCounter = 1 // reset si hay un bubble que no es lista
+      return { content: bubble, listStart: null }
+    }
+  })
+
   return (
     <div className="flex flex-col gap-2">
       {bubbles.map((bubble, index) => (
-        <BotBubble key={index} content={bubble} />
+        <BotBubble key={index} content={bubble.content} listStart={bubble.listStart} />
       ))}
     </div>
   )
