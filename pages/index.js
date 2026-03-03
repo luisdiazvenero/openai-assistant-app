@@ -40,10 +40,26 @@ export default function Home() {
       });
 
       const fullContent = response.data.message;
-      const bubbles = fullContent
+
+      // Split por [BUBBLE] primero
+      let bubbles = fullContent
         .split('[BUBBLE]')
         .map(b => b.trim())
         .filter(b => b.length > 0);
+
+      // Fallback: si solo hay 1 bubble con varias oraciones, split por oracion
+      // pero respetando bloques de producto (lineas con precio, url, imagen juntas)
+      if (bubbles.length === 1) {
+        const text = bubbles[0];
+        // Split por punto seguido de espacio y mayuscula, pero no dentro de URLs
+        const sentences = text
+          .split(/(?<=[^A-Z]\.)\s+(?=[A-Z\u00C0-\u017E¿¡])/)
+          .map(s => s.trim())
+          .filter(s => s.length > 0);
+        if (sentences.length > 1) {
+          bubbles = sentences;
+        }
+      }
 
       // Mostrar cada bubble secuencialmente con animación de typing entre cada uno
       for (let i = 0; i < bubbles.length; i++) {
