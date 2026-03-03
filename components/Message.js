@@ -80,9 +80,9 @@ const Message = ({ role, content }) => {
     )
   }
 
-  // Split bot message by --- and render each part as a separate bubble
+  // Split bot message by [BUBBLE] and render each part as a separate bubble
   const bubbles = content
-    .split(/\n---\n/)
+    .split('[BUBBLE]')
     .map(b => b.trim())
     .filter(b => b.length > 0)
 
